@@ -19,11 +19,14 @@ const PopularMenu = () => {
         heading={"From Our Menu"}
       ></SharedTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {
-            menu.map(item => <MenuItem
-            key={item._id}
-            item={item}></MenuItem>)
-        }
+        {menu.map((item) => (
+          <MenuItem key={item._id} item={item}></MenuItem>
+        ))}
+      </div>
+      <div className="flex items-center justify-center mt-6">
+        <button className="btn btn-outline mt-4 rounded-md text-stone-900 border-0 border-b-4">
+          View Full Menu
+        </button>
       </div>
     </section>
   );
