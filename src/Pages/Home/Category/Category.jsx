@@ -11,10 +11,16 @@ import slide3 from "../../../assets/home/slide3.jpg";
 import slide4 from "../../../assets/home/slide4.jpg";
 import slide5 from "../../../assets/home/slide5.jpg";
 import { Pagination } from "swiper/modules";
+import SharedTitle from "../../../Components/SharedTitle/SharedTitle";
 
 const Category = () => {
   return (
-    <Swiper
+    <section>
+        <SharedTitle
+        subHeading={"From 11am to 11pm"}
+        heading={"Order Online"}>
+        </SharedTitle>
+            <Swiper
       slidesPerView={4}
       spaceBetween={30}
       centeredSlides={true}
@@ -55,6 +61,8 @@ const Category = () => {
         </h3>
       </SwiperSlide>
     </Swiper>
+    </section>
+
   );
 };
 
