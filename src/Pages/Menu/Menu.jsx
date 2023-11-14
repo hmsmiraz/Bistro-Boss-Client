@@ -17,29 +17,20 @@ const Menu = () => {
   const offered = menu.filter((item) => item.category === "offered");
   return (
     <div className="">
-      <Helmet>
-        <title>Bistro Boss | Menu</title>
-      </Helmet>
+      <Helmet><title>Bistro Boss | Menu</title></Helmet>
       {/* main cover */}
       <Cover img={menuImg} title={"Our menu"}></Cover>
       {/* offers section */}
-      <SharedTitle
-        subHeading={"Don't miss"}
-        heading={"Today's Offer"}
-      ></SharedTitle>
+      <SharedTitle subHeading={"Don't miss"}heading={"Today's Offer"}></SharedTitle>
       <MenuCategory items={offered}></MenuCategory>
       {/* dessert section */}
-      <MenuCategory
-        items={dessert}
-        title={"Dessert"}
-        img={dessertImg}
-      ></MenuCategory>
+      <MenuCategory items={dessert}title={"dessert"}img={dessertImg}></MenuCategory>
       {/* pizaa section */}
       <MenuCategory items={pizza} title={"pizza"} img={pizzaImg}></MenuCategory>
       {/* soup */}
       <MenuCategory items={soup} title={"soup"} img={soupImg}></MenuCategory>
       {/* salad */}
-      <MenuCategory items={salad} title={"salas"} img={saladImg}></MenuCategory>
+      <MenuCategory items={salad} title={"salad"} img={saladImg}></MenuCategory>
     </div>
   );
 };
