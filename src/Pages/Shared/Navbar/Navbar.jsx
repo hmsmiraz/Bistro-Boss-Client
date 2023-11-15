@@ -4,13 +4,16 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <Link to={'/'}>Home</Link>
+        <Link to={"/"}>Home</Link>
       </li>
       <li>
-        <Link to={'/menu'}>Menu</Link>
+        <Link to={"/menu"}>Menu</Link>
       </li>
       <li>
-        <Link to={'/order/salad'}>Order</Link>
+        <Link to={"/order/salad"}>Order</Link>
+      </li>
+      <li>
+        <Link to={"/register"}>Register</Link>
       </li>
     </>
   );
@@ -42,16 +45,16 @@ const Navbar = () => {
               {navLinks}
             </ul>
           </div>
-          <img src="/kit.svg" alt="" className="h-5 w-5"/>
+          <img src="/kit.svg" alt="" className="h-5 w-5" />
           <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navLinks}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <Link to={'/login'}>
+            <button className="btn btn-success rounded-md">Login</button>
+          </Link>
         </div>
       </div>
     </>
