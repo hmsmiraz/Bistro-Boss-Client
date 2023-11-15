@@ -1,25 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+
+  const { signIn } = useContext(AuthContext);
+
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
     if (validateCaptcha(user_captcha_value)) {
-        setDisabled(false);
-    }
-
-    else {
-        setDisabled(true);
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
   };
 
@@ -29,14 +32,21 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+    signIn(email, password).then((result) => {
+      const user = result.user;
+      console.log(user);
+    });
   };
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row gap-10">
-        <div className="text-center  md:w-1/2 lg:text-right">
-          <h1 className="text-5xl font-bold text-stone-700">Login now!</h1>
-        </div>
-        <div className="card  md:w-1/2 max-w-sm shadow-2xl bg-base-100">
+    <>
+      <Helmet>
+        <title>Bistro Boss | Log In</title>
+      </Helmet>
+      <div className="hero w-full min-h-screen bg-base-200">
+        <div className="card  w-full max-w-lg shadow-2xl bg-base-100">
+          <h2 className="text-3xl font-bold text-center my-4 text-stone-700">
+            Please Login Here!
+          </h2>
           <form className="card-body" onSubmit={handleLogin}>
             <div className="form-control">
               <label className="label">
@@ -81,30 +91,29 @@ const Login = () => {
               />
               <button
                 onClick={handleValidateCaptcha}
-                className="btn btn-xs btn-outline mt-2 rounded-md mx-16"
+                className="btn btn-sm btn-outline my-4 rounded-md mx-16"
               >
                 Validate
               </button>
             </div>
-            <div className="form-control mt-2">
+            <div className="form-control">
               <input
                 type="submit"
                 disabled={disabled}
                 className="btn btn-primary rounded-md"
                 value="Login"
               />
-              <p className="">
-                New Here?{" "}
-                <Link to={"/register"} className="text-emerald-600 font-bold">
-                  Register
-                </Link>{" "}
-                Please
+              <p className="text-center">
+                New Here? Create an account Please{" "}
+                <Link to={"/signUp"} className="text-emerald-600 font-bold">
+                  Sign Up
+                </Link>
               </p>
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
