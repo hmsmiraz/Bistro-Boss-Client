@@ -1,24 +1,57 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const {createUser} = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
     console.log(data);
-    createUser(data.email, data.password)
-    .then(result=> {
-        const loggedUser = result.user;
-        console.log(loggedUser);
-    })
+    createUser(data.email, data.password).then((result) => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      updateUserProfile(data.name, data.photoUrl)
+        .then(() => {
+          console.log("User profile updated");
+          reset();
+          toast.success("User Created Successful!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Login error!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        });
+    });
   };
 
   //console.log(watch("example"))
@@ -27,6 +60,7 @@ const SignUp = () => {
       <Helmet>
         <title>Bistro Boss | Sign Up</title>
       </Helmet>
+      <ToastContainer />
       <div className="hero  w-full min-h-screen bg-base-200">
         <div className="card  w-full max-w-lg shadow-2xl bg-base-100">
           <h2 className="text-3xl font-bold text-center my-4 text-stone-700">
@@ -64,6 +98,23 @@ const SignUp = () => {
               {errors.email && (
                 <span className="text-center text-red-600">
                   Email is required
+                </span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                placeholder="photo url"
+                name="photoUrl"
+                {...register("photoUrl", { required: true })}
+                className="input input-bordered"
+              />
+              {errors.photoUrl && (
+                <span className="text-center text-red-600">
+                  Photo URL is required
                 </span>
               )}
             </div>
