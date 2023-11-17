@@ -21,10 +21,10 @@ const Navbar = () => {
         <Link to={"/menu"}>Menu</Link>
       </li>
       <li>
-        <Link to={"/order/salad"}>Order</Link>
+        <Link to={"/order/salad"}>Order Food</Link>
       </li>
       <li>
-        <Link to={"/"}>
+        <Link to={"/dashboard/cart"}>
           <button className="flex text-lg">
             <FaShoppingCart />
             <span className="badge ml-2">+{cart.length}</span>

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useCart from "../../Hooks/useCart";
 
 const FoodCard = ({ item }) => {
   const { _id, name, recipe, image, price } = item;
@@ -11,6 +12,7 @@ const FoodCard = ({ item }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure(); 
+  const [, refetch] = useCart();
   const handleAddToCart = (food) => {
     // console.log(food, user.email);
     if (user && user.email) {
@@ -28,7 +30,7 @@ const FoodCard = ({ item }) => {
         console.log(res.data);
         if (res.data.insertedId) {
           toast.success(`${name} added to cart successfully`, {
-            position: "top-center",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -37,6 +39,8 @@ const FoodCard = ({ item }) => {
             progress: undefined,
             theme: "colored",
             });
+            // refetch
+            refetch();
         }
       });
     } else {
