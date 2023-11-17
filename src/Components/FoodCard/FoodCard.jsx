@@ -29,7 +29,7 @@ const FoodCard = ({ item }) => {
       axiosSecure.post("/carts", cartItem).then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
-          toast.success(`${name} added to cart successfully`, {
+          toast.success(`Added ${name}`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -46,7 +46,7 @@ const FoodCard = ({ item }) => {
     } else {
       Swal.fire({
         title: "You aren't login",
-        text: "DO want to login/register?",
+        text: "Do want to login/register?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
