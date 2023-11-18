@@ -9,6 +9,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const Login = () => {
   // const captchaRef = useRef(null);
@@ -132,12 +133,13 @@ const Login = () => {
                 className="btn btn-primary rounded-md mt-2"
                 value="Login"
               />
-              <p className="text-center">
+              <p className="text-center py-2">
                 New Here? Create an account Please{" "}
                 <Link to={"/signUp"} className="text-emerald-600 font-bold">
                   Sign Up
                 </Link>
               </p>
+              <SocialLogin></SocialLogin>
             </div>
           </form>
         </div>

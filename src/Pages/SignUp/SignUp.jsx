@@ -6,6 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const {
@@ -171,12 +172,13 @@ const SignUp = () => {
                 className="btn btn-primary rounded-md"
                 value="Register"
               />
-              <p className="text-center">
+              <p className="text-center py-2">
                 Have an account? Please{" "}
                 <Link to={"/login"} className="text-emerald-600 font-bold">
                   Login
                 </Link>
               </p>
+              <SocialLogin></SocialLogin>
             </div>
           </form>
         </div>
