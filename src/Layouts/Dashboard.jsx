@@ -13,11 +13,12 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 //import useCart from "../Hooks/useCart";
 
 const Dashboard = () => {
   //const [cart] = useCart();
-  const isAdmin = true;
+  const [ isAdmin ] = useAdmin();
   return (
     <div className="flex">
       {/* sidebar */}
