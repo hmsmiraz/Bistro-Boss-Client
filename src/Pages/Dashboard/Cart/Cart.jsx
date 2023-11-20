@@ -2,6 +2,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import useCart from "../../../Hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [cart, refetch] = useCart();
@@ -26,6 +27,8 @@ const Cart = () => {
               title: "Deleted!",
               text: "Your order has been deleted.",
               icon: "success",
+              showConfirmButton: false,
+              timer: 1500
             });
           }
         });
@@ -41,9 +44,20 @@ const Cart = () => {
         <h2 className="text-4xl font-bold text-green-800">
           Total Price: ${totalPrice}
         </h2>
-        <button className="btn btn-secondary rounded-md text-base text-white font-semibold">
-          Pay
-        </button>
+        {cart.length ? (
+          <Link to={"/dashboard/payment"}>
+            <button className="btn btn-secondary rounded-md text-base text-white font-semibold">
+              Pay
+            </button>
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="btn btn-secondary rounded-md text-base text-white font-semibold"
+          >
+            Pay
+          </button>
+        )}
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">
