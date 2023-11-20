@@ -12,56 +12,85 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AddItems from "../Pages/Dashboard/AddItems/AddItems";
 import AdminRoute from "./AdminRoute";
 import ManegeItems from "../Pages/Dashboard/ManegeItems/ManegeItems";
+import UpdateItem from "../Pages/Dashboard/UpdateItem/UpdateItem";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
     children: [
-        {
-            path:'/',
-            element:<Home></Home>
-        },
-        {
-            path:'/menu',
-            element: <Menu></Menu>,
-        },
-        {
-            path:'/order/:category',
-            element: <Order></Order>,
-        },
-        {
-            path:'/login',
-            element: <Login></Login>,
-        },
-        {
-            path:'/signUp',
-            element: <SignUp></SignUp>,
-        },
-    ]
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/menu",
+        element: <Menu></Menu>,
+      },
+      {
+        path: "/order/:category",
+        element: <Order></Order>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/signUp",
+        element: <SignUp></SignUp>,
+      },
+    ],
   },
   {
-    path:'dashboard',
-    element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
+    path: "dashboard",
+    element: (
+      <PrivateRoutes>
+        <Dashboard></Dashboard>
+      </PrivateRoutes>
+    ),
     children: [
-        // normal user route
-        {
-            path: 'cart',
-            element:<Cart></Cart>,
-        },
-        // admin routes
-        {
-            path: 'users',
-            element: <AdminRoute><AllUsers></AllUsers></AdminRoute>,
-        },
-        {
-            path: 'addItems',
-            element: <AdminRoute><AddItems></AddItems></AdminRoute>,
-        },
-        {
-            path: 'manegeItems',
-            element: <AdminRoute><ManegeItems></ManegeItems></AdminRoute>,
-        },
-    ]
+      // normal user route
+      {
+        path: "cart",
+        element: <Cart></Cart>,
+      },
+      // admin routes
+      {
+        path: "users",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "addItems",
+        element: (
+          <AdminRoute>
+            <AddItems></AddItems>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manegeItems",
+        element: (
+          <AdminRoute>
+            <ManegeItems></ManegeItems>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "updateItem/:id",
+        element: (
+          <AdminRoute>
+            <UpdateItem></UpdateItem>
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `http://localhost:5000/menu/${params.id}`
+          ),
+      },
+    ],
   },
 ]);
