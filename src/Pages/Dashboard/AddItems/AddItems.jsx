@@ -2,23 +2,47 @@ import { useForm } from "react-hook-form";
 import SharedTitle from "../../../Components/SharedTitle/SharedTitle";
 import { FaUtensils } from "react-icons/fa";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddItems = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const onSubmit = async (data) => {
     console.log(data);
-    //upload image to img bb and get url 
-    const imageFile = { image: data.image[0] }
+    //upload image to img bb and get url
+    const imageFile = { image: data.image[0] };
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
+      headers: {
+        "content-type": "multipart/form-data",
+      },
     });
-    console.log(res.data);
+    if (res.data.success) {
+      const menuItem = {
+        name: data.name,
+        category: data.category,
+        price: parseFloat(data.price),
+        recipe: data.recipe,
+        image: res.data.data.display_url,
+      };
+      const menuRes = await axiosSecure.post("/menu", menuItem);
+      console.log(menuRes.data);
+      if (menuRes.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${data.name} add to menu.`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+        reset();
+      }
+    }
+    console.log("Image url", res.data);
   };
 
   return (
@@ -36,7 +60,7 @@ const AddItems = () => {
             <input
               type="text"
               placeholder="Recipe Name"
-              {...register("name", {required: true})}
+              {...register("name", { required: true })}
               className="input input-bordered w-full"
             />
           </div>
@@ -46,8 +70,9 @@ const AddItems = () => {
               <label className="label">
                 <span className="label-text">Category*</span>
               </label>
-              <select defaultValue={"default"}
-                {...register("category", {required: true})}
+              <select
+                defaultValue={"default"}
+                {...register("category", { required: true })}
                 className="select select-bordered w-full"
               >
                 <option disabled value={"default"}>
@@ -68,7 +93,7 @@ const AddItems = () => {
               <input
                 type="number"
                 placeholder="Price"
-                {...register("price", {required: true})}
+                {...register("price", { required: true })}
                 className="input input-bordered w-full"
               />
             </div>
@@ -81,14 +106,14 @@ const AddItems = () => {
             <textarea
               className="textarea textarea-bordered h-24"
               placeholder="Recipe Details"
-              {...register("recipe", {required: true})}
+              {...register("recipe", { required: true })}
             ></textarea>
           </div>
           {/* for picture */}
           <div className="form-control w-full my-4">
             <input
               type="file"
-              {...register("image", {required: true})}
+              {...register("image", { required: true })}
               className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
             />
           </div>
