@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../../Hooks/useCart";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
   const handleLogout = () => {
     logOut()
       .then(() => {})
@@ -23,6 +25,16 @@ const Navbar = () => {
       <li>
         <Link to={"/order/salad"}>Order Food</Link>
       </li>
+      {user && isAdmin && (
+        <li>
+          <Link to={"/dashboard/adminHome"}>Dashboard</Link>
+        </li>
+      )}
+      {user && !isAdmin && (
+        <li>
+          <Link to={"/dashboard/userHome"}>Dashboard</Link>
+        </li>
+      )}
       <li>
         <Link to={"/dashboard/cart"}>
           <button className="flex text-lg">
@@ -80,9 +92,11 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <Link to={"/login"}>
-            <button className="btn btn-success rounded-md">Login</button>
-          </Link>
+          {/* <Link to={"/login"}> */}
+          <button className="btn btn-ghost rounded-md">
+            {user?.displayName}
+          </button>
+          {/* </Link> */}
         </div>
       </div>
     </>
