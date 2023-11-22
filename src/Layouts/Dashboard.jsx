@@ -14,10 +14,10 @@ import {
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
-//import useCart from "../Hooks/useCart";
+import useCart from "../Hooks/useCart";
 
 const Dashboard = () => {
-  //const [cart] = useCart();
+  const [cart] = useCart();
   const [ isAdmin ] = useAdmin();
   return (
     <div className="flex">
@@ -80,7 +80,7 @@ const Dashboard = () => {
               <li>
                 <NavLink to={"/dashboard/cart"}>
                   <FaShoppingCart />
-                  My Cart
+                  My Cart({cart.length})
                 </NavLink>
               </li>
               <li>
