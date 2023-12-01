@@ -10,7 +10,7 @@ import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch("https://bistro-boss-server-beryl-nu.vercel.app/reviews")
+    fetch("https://bistro-boss-server-dkvhd15ap-hmsmiraz.vercel.app/reviews")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
